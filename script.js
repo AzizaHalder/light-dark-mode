@@ -17,10 +17,9 @@ function imageMode(color) {
 function darkMode() {
   nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
   textBox.style.backgroundColor = "rgb(255 255 255 / 50%)";
-  console.log(toggleIcon.children);
 
   toggleIcon.children[0].textContent = "Dark Mode";
-  toggleIcon.children[1].classList.replace("fa-sun", "moon");
+  toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
 
   imageMode("dark");
 }
@@ -31,18 +30,19 @@ function lightMode() {
   textBox.style.backgroundColor = "rgb(0 0 0 / 50%)";
 
   toggleIcon.children[0].textContent = "Light Mode";
-  toggleIcon.children[1].classList.remove("sun", "fa-moon");
+  toggleIcon.children[1].classList.remove("fa-sun", "fa-moon");
   imageMode("light");
 }
 
 // Switch Theme Dynamically
 function switchTheme(event) {
-  console.log(event.target.checked);
   if (event.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
     darkMode();
   } else {
     document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("theme", "light");
     lightMode();
   }
 }
