@@ -6,6 +6,9 @@ const image2 = document.getElementById("image2");
 const image3 = document.getElementById("image3");
 const textBox = document.getElementById("text-box");
 
+const DARK_THEME = "dark";
+const LIGHT_THEME = "light";
+
 // Dark or Light themes
 function imageMode(color) {
   image1.src = `img/undraw_feeling_proud_${color}.svg`;
@@ -13,25 +16,18 @@ function imageMode(color) {
   image3.src = `img/undraw_conceptual_idea_${color}.svg`;
 }
 
-// Dark Mode Styles
-function darkMode() {
-  nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
-  textBox.style.backgroundColor = "rgb(255 255 255 / 50%)";
-
-  toggleIcon.children[0].textContent = "Dark Mode";
-  toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
-
-  imageMode("dark");
-}
-
-// Light Mode Styles
-function lightMode() {
-  nav.style.backgroundColor = "rgb(255 255 255 / 50%)";
-  textBox.style.backgroundColor = "rgb(0 0 0 / 50%)";
-
-  toggleIcon.children[0].textContent = "Light Mode";
-  toggleIcon.children[1].classList.remove("fa-sun", "fa-moon");
-  imageMode("light");
+function toggleLightDarkMode(isLight) {
+  nav.style.backgroundColor = isLight
+    ? "rgb(255 255 255 / 50%)"
+    : "rgb(0 0 0 / 50%)";
+  textBox.style.backgroundColor = isLight
+    ? "rgb(0 0 0 / 50%)"
+    : "rgb(255 255 255 / 50%)";
+  toggleIcon.children[0].textContent = isLight ? "Light Mode" : "Dark Mode";
+  isLight
+    ? toggleIcon.children[1].classList.replace("fa-moon", "fa-sun")
+    : toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
+  isLight ? imageMode("light") : imageMode("dark");
 }
 
 // Switch Theme Dynamically
@@ -39,11 +35,11 @@ function switchTheme(event) {
   if (event.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
-    darkMode();
+    toggleLightDarkMode(false);
   } else {
     document.documentElement.setAttribute("data-theme", "light");
     localStorage.setItem("theme", "light");
-    lightMode();
+    toggleLightDarkMode(true);
   }
 }
 
